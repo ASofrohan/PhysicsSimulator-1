@@ -10,7 +10,7 @@ public class Body {
 	protected Vector2D position;
 	protected double mass;
 	
-	public Body(String id, Vector2D v, Vector2D p, double m){
+	public Body(String id, Vector2D p, Vector2D v, double m){
 		this.id = id;
 		this.velocity = v;
 		this.force = new Vector2D(0.0,0.0);

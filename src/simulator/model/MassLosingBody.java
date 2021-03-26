@@ -1,5 +1,7 @@
 package simulator.model;
 
+import org.json.JSONObject;
+
 import simulator.misc.Vector2D;
 
 public class MassLosingBody extends Body {
@@ -7,8 +9,8 @@ public class MassLosingBody extends Body {
 	protected double lossFrequency;
 	protected double counter; 
 	
-	MassLosingBody(String id, Vector2D v, Vector2D p, double m, double lossFactor, double lossFrequency){
-		super(id, v, p, m);
+	public MassLosingBody(String id, Vector2D p, Vector2D v, double m, double lossFrequency, double lossFactor){
+		super(id, p, v, m);
 		this.lossFactor = lossFactor;
 		this.lossFrequency = lossFrequency;
 		counter = 0.0;
@@ -27,6 +29,17 @@ public class MassLosingBody extends Body {
 		}
 	}
 	
+	public JSONObject getState() {
+		JSONObject joBody = new JSONObject();
+		joBody.put("id", this.id);
+		joBody.put("m", this.mass);
+		joBody.put("p", this.position.asJSONArray());
+		joBody.put("v", this.velocity.asJSONArray());
+		joBody.put("f", this.force.asJSONArray());
+		joBody.put("freq", this.lossFrequency);
+		joBody.put("factor", this.lossFactor);
+		return joBody;
+	}
 	
 	public double getLossFactor() {
 		return lossFactor;
