@@ -4,9 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import simulator.misc.Vector2D;
+import simulator.model.ForceLaws;
 import simulator.model.MovingTowardsFixedPoint;
 
-public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPoint> {
+public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 
 	public MovingTowardsFixedPointBuilder() {
 		TypeTag = "mtfp";			

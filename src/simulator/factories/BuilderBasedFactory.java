@@ -9,7 +9,7 @@ public class BuilderBasedFactory <T> implements Factory<T>{
 	protected List<Builder<T>> builders;
 	
 	public BuilderBasedFactory(List<Builder<T>> builders) {
-		builders = new ArrayList<Builder<T>>(builders);
+		this.builders = new ArrayList<Builder<T>>(builders);
 	}
 	
 	@Override

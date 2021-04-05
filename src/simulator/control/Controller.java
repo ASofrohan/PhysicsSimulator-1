@@ -21,9 +21,8 @@ public class Controller {
 		this.factory = factory;
 	}
 	
-	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) {
-		int i = 0;
-		boolean stop = false;
+	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) throws CmpException{
+		int i = 1;
 		JSONObject jsonExpOut = null;
 		JSONArray jaExpOut = null;
 		
@@ -35,24 +34,31 @@ public class Controller {
 			jsonExpOut = new JSONObject(new JSONTokener(expOut));
 			jaExpOut = jsonExpOut.getJSONArray("states");
 		}
-		p.println("\"s0\": [");
 		p.println(sim.toString());
-		p.println("]");
-		
-		while(i < n && stop) {
-			if(expOut != null) cmp.equal(jaExpOut.getJSONObject(i), jaExpOut.getJSONObject(i));
-			
-			sim.advance();
-			
-			p.println("\"s" + i + "\": [");
-			p.println(sim.toString());
-			p.println("]");
-			
-			i++;
+		try {
+		if(expOut != null) {
+			if(cmp.equal(sim.getState(), jaExpOut.getJSONObject(0))) {
+			throw new CmpException("Different state: " + 0 + "\nStep: " + 0);	
+			}
 		}
 		
-		p.println("]");
+		while(i <= n) {
+			sim.advance();
+			p.println("," + sim.toString());
+			if(expOut != null) {
+				if(cmp.equal(sim.getState(), jaExpOut.getJSONObject(i))) {
+				throw new CmpException("Different state: " + i + "\nStep: " + i);	
+				}
+			}
+			i++;
+		}
+		}catch(CmpException ex) {
+			throw new CmpException(ex.getMessage());
+		}
+		finally {
+		p.println("\n]");
 		p.println("}");
+		}
 	}
 	
 	public void loadBodies(InputStream in) {
