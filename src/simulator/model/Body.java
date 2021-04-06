@@ -28,7 +28,7 @@ public class Body {
 	
 	void move(double t) {
 		Vector2D a = new Vector2D();		//acceleration
-		if(mass !=0) a = new Vector2D(force.scale(1/mass));
+		if(mass != 0) a = new Vector2D(force.scale(1/mass));
 		this.position = position.plus(velocity.scale(t));
 		this.position = position.plus(a.scale(Math.pow(t, 2)/2));
 		this.velocity = velocity.plus(a.scale(t));

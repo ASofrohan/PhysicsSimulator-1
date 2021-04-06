@@ -29,15 +29,14 @@ public class Controller {
 		PrintStream p = new PrintStream(out);
 		p.println("{");
 		p.println("\"states\": [");
-		
 		if(expOut != null) {
 			jsonExpOut = new JSONObject(new JSONTokener(expOut));
 			jaExpOut = jsonExpOut.getJSONArray("states");
 		}
 		p.println(sim.toString());
-		try {
+		try { 
 		if(expOut != null) {
-			if(cmp.equal(sim.getState(), jaExpOut.getJSONObject(0))) {
+			if(!cmp.equal(sim.getState(), jaExpOut.getJSONObject(0))) {
 			throw new CmpException("Different state: " + 0 + "\nStep: " + 0);	
 			}
 		}
@@ -46,7 +45,7 @@ public class Controller {
 			sim.advance();
 			p.println("," + sim.toString());
 			if(expOut != null) {
-				if(cmp.equal(sim.getState(), jaExpOut.getJSONObject(i))) {
+				if(!cmp.equal(sim.getState(), jaExpOut.getJSONObject(i))) {
 				throw new CmpException("Different state: " + i + "\nStep: " + i);	
 				}
 			}
@@ -60,6 +59,37 @@ public class Controller {
 		p.println("}");
 		}
 	}
+	
+	/*public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) throws  CmpException { 
+        PrintStream p = new PrintStream(out);
+        p.println("{");
+        p.println("\"states\": [");
+
+
+        if(expOut != null) {
+            JSONArray estados;
+            JSONObject jo = new JSONObject(new JSONTokener(expOut));
+            estados = jo.getJSONArray("states");
+
+            for (int i = 0; i< n; i++) {
+                sim.advance();
+                if(!cmp.equal(sim.getState(), estados.getJSONObject(i))) 
+                    throw new CmpException(i + sim.getState().toString() + estados.getJSONObject(i).toString());
+                p.println("," + sim.toString());
+            }
+        }
+
+        else {
+            for (int i = 0; i< n; i++) {
+                sim.advance();
+                p.println("," + sim.toString());
+            }
+        }
+        p.println("\n]");
+        p.println("}");
+
+
+    }*/
 	
 	public void loadBodies(InputStream in) {
 		JSONObject jsonInput = new JSONObject(new JSONTokener(in));

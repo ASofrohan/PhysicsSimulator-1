@@ -22,7 +22,7 @@ public class EpsilonEqualStates implements StateComparator {
 		Vector2D v2 = new Vector2D();
 		if(s2Array.length() != s1Array.length()) return false;
 		for(int i = 0; i < s1Array.length(); i++) {
-			if(s1Array.getJSONObject(i).getString("id") != s2Array.getJSONObject(i).getString("id")) return false;										//check id
+			if(!s1Array.getJSONObject(i).getString("id").contentEquals(s2Array.getJSONObject(i).getString("id"))) return false;							//check id
 			if(Math.abs(s1Array.getJSONObject(i).getDouble("m") - s2Array.getJSONObject(i).getDouble("m"))>eps) return false;							//check mass
 			v1 = new Vector2D(s1Array.getJSONObject(i).getJSONArray("p").getDouble(0), s1Array.getJSONObject(i).getJSONArray("p").getDouble(1));		//check position
 			v2 = new Vector2D(s2Array.getJSONObject(i).getJSONArray("p").getDouble(0), s2Array.getJSONObject(i).getJSONArray("p").getDouble(1));
