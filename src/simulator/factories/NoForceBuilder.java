@@ -8,18 +8,17 @@ import simulator.model.NoForce;
 public class NoForceBuilder extends Builder<ForceLaws> {
 
 	public NoForceBuilder() {
-		TypeTag = "nf";			
-		desc = "NoForce";
+		super("ng", "no hay fuerza");
 	}
-	
+
 	@Override
-	protected NoForce createTheInstance(JSONObject jo) {
-		return new NoForce();
+	protected ForceLaws createTheInstance(JSONObject data) {
+		return new  NoForce();
 	}
-	
+
 	@Override
-	public JSONObject createData() {
-		return new JSONObject(); 
+	protected JSONObject getBuilderData() {
+		return null;
 	}
 
 }

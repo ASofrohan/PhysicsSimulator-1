@@ -6,41 +6,44 @@ import org.json.JSONObject;
 import simulator.misc.Vector2D;
 import simulator.model.Body;
 
-public class BasicBodyBuilder extends Builder<Body>{
-	
+public class BasicBodyBuilder extends Builder<Body> {
+
 	public BasicBodyBuilder() {
-		TypeTag = "basic";
-		desc = "basicBody";
+		super("basic", "Basic Body");
+		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
-	protected Body createTheInstance(JSONObject jo) {		
+	protected Body createTheInstance(JSONObject jo) {
+		
+		if(!jo.has("id") || !jo.has("p") || !jo.has("v") || !jo.has("m")) {
+			throw new IllegalArgumentException("Faltan valores para crear los cuerpos");
+		}
 		String id = jo.getString("id");
 		JSONArray vector = jo.getJSONArray("p");
 		Vector2D p = new Vector2D(vector.getDouble(0), vector.getDouble(1));
 		vector = jo.getJSONArray("v");
 		Vector2D v = new Vector2D(vector.getDouble(0), vector.getDouble(1));
 		double m = jo.getDouble("m");
+		if(m <= 0) {
+			throw new IllegalArgumentException("Masa menor o igual que cero");
+		}
 		return new Body(id, p, v, m);
 	}
+
 	
 	@Override
-	public JSONObject createData() {
-		JSONObject obj = new JSONObject();
-		JSONArray ja = new JSONArray();
+	protected JSONObject getBuilderData() {
+	
 		
-		obj.put("id", "b1");
+		JSONObject JASON = new JSONObject();
+		JASON.put("id", "string que identifica al objeto");
+		JASON.put("p", "posicion del objeto");		
+		JASON.put("v", "velocidad del objeto");
+		JASON.put("m", "masa del objeto");		
+	
 		
-		ja.put(0.0e00);
-		ja.put(0.0e00);		
-		obj.put("p", ja);
-		
-		ja = new JSONArray();
-		ja.put(0.05e04);
-		ja.put(0.0e00);
-		obj.put("v", ja);
-		
-		obj.put("m", 5.97e24);	
-		return obj;
+		return JASON;
 	}
+	
 }

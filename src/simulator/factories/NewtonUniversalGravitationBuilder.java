@@ -1,31 +1,31 @@
 package simulator.factories;
 
-
 import org.json.JSONObject;
 
 import simulator.model.ForceLaws;
 import simulator.model.NewtonUniversalGravitation;
 
 public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws> {
-	
-	private static final double g = 6.67e-11;
+	private final double G = 6.67e-11;
 	
 	public NewtonUniversalGravitationBuilder() {
-		TypeTag = "nlug";			
-		desc = "NewtonUniversalGravitation";
+		super("nlug", "Fuerza universal de Newton");
 	}
-	
+
 	@Override
-	protected NewtonUniversalGravitation createTheInstance(JSONObject jo) {
-		double g = NewtonUniversalGravitationBuilder.g;
-		if(jo.has("G")) g = jo.getDouble("G");
-		return new NewtonUniversalGravitation(g);
+	protected ForceLaws createTheInstance(JSONObject data) {
+		double c = G;
+		if(data.has("G"))
+			c = data.getDouble("G");
+		return new NewtonUniversalGravitation(c);
+			
 	}
-	
+
 	@Override
-	public JSONObject createData() {
-		JSONObject obj = new JSONObject();
-		obj.put("G", g);
-		return obj;
+	protected JSONObject getBuilderData() {
+		JSONObject JASON = new JSONObject();
+		JASON.put("G", "Constante graviatacional, default: 6.67e-11 ");	
+		return JASON;
 	}
+
 }

@@ -8,18 +8,17 @@ import simulator.control.StateComparator;
 public class MassEqualStatesBuilder extends Builder<StateComparator> {
 
 	public MassEqualStatesBuilder() {
-		TypeTag = "masseq";			
-		desc = "MassEqualStatesComparator";
+		super("masseq", "Comprueba igualdad de masas");
 	}
-	
+
 	@Override
-	protected StateComparator createTheInstance(JSONObject jo) {
+	protected StateComparator createTheInstance(JSONObject data) {
 		return new MassEqualStates();
 	}
-	
+
 	@Override
-	public JSONObject createData() {
-		return new JSONObject(); 
+	protected JSONObject getBuilderData() {
+		return null;
 	}
 
 }

@@ -18,11 +18,7 @@ public class MassLosingBody extends Body {
 
 	@Override
 	void move(double t) {
-		Vector2D a = new Vector2D();		//acceleration
-		if(mass !=0) a = new Vector2D(force.scale(1/mass));
-		position = new Vector2D(position.plus(velocity.scale(t)));
-		position = new Vector2D(position.plus(a.scale(Math.pow(t, 2)/2)));
-		this.velocity = velocity.plus(a.scale(t));
+		super.move(t);
 		this.counter += t;
 		if(counter >= lossFrequency) {
 			mass *= (1-lossFactor);

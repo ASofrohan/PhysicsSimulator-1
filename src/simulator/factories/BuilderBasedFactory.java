@@ -1,35 +1,38 @@
 package simulator.factories;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.json.JSONObject;
 
-public class BuilderBasedFactory <T> implements Factory<T>{
-	
-	protected List<Builder<T>> builders;
-	
+public class BuilderBasedFactory<T> implements Factory<T> {
+
+	private List<Builder<T>> _builders;
+
 	public BuilderBasedFactory(List<Builder<T>> builders) {
-		this.builders = new ArrayList<Builder<T>>(builders);
+		_builders = new ArrayList<>(builders);
 	}
-	
+
 	@Override
 	public T createInstance(JSONObject info) {
-		T build;
-		for(int i = 0; i < builders.size(); i++) {
-			build = builders.get(i).createInstance(info);
-			if(build != null) {
-				return build;
+		if (info != null) {
+			for (Builder<T> bb : _builders) {
+				T o = bb.createInstance(info);
+				if (o != null)
+					return o;
 			}
-		} 
-		throw new IllegalArgumentException("Unknown model");
+		}
+
+		throw new IllegalArgumentException("Invalid value for createInstance: " + info);
 	}
 
 	@Override
 	public List<JSONObject> getInfo() {
-		List<JSONObject> list = new ArrayList<JSONObject>();
-		for(int i = 0; i < builders.size(); i++) {
-			list.add(builders.get(i).getBuilderInfo());
+		List<JSONObject >info = new ArrayList<JSONObject>();  
+		for (Builder<T> bb : _builders) {
+			info.add(bb.getBuilderInfo());		
 		}
-		return list;
+		return info;
 	}
 }
