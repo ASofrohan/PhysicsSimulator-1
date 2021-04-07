@@ -23,6 +23,7 @@ public class MassLosingBody extends Body {
 		position = new Vector2D(position.plus(velocity.scale(t)));
 		position = new Vector2D(position.plus(a.scale(Math.pow(t, 2)/2)));
 		this.velocity = velocity.plus(a.scale(t));
+		this.counter += t;
 		if(counter >= lossFrequency) {
 			mass *= (1-lossFactor);
 			counter = 0.0;

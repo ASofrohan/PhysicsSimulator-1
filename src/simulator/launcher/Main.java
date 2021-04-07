@@ -1,3 +1,6 @@
+//Asier Goñi Ancho
+//Fernando German Herrera Herrero
+
 package simulator.launcher;
 
 import java.io.File;
