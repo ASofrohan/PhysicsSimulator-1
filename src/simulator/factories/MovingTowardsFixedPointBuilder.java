@@ -1,5 +1,6 @@
 package simulator.factories;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import simulator.misc.Vector2D;
@@ -27,8 +28,14 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 
 	@Override
 	protected JSONObject getBuilderData() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject jo = new JSONObject();
+		jo.put("type", this._type);
+		JSONObject jo1 = new JSONObject();
+		jo1.put("c", "the point towards which bodies move(a json list of 2 numbers, e.g., [100.0,50.0])");
+		jo1.put("g", "the length of the acceleration vector (a number)");
+		jo.put("data", jo1);
+		jo.put("desc", this._desc);
+		return jo;
 	}
 
 }

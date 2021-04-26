@@ -77,4 +77,16 @@ public class PhysicsSimulator {
 	public void setCurrentT(double currentT) {
 		this.currentT = currentT;
 	}
+	public void reset() {
+		bs.clear();
+		currentT = 0;
+	}
+	public void setDeltaTime(double dt) {
+	 if(dt<=0) throw new IllegalArgumentException("Set delta time exception");
+	 this.dt = dt;
+	}
+	public void setForceLawsLaws(ForceLaws forceLaws) {
+		 if(forceLaws.equals(null)) throw new IllegalArgumentException("setForceLawsLaws exception");
+		this.forceLaw = forceLaws;
+	}
 }

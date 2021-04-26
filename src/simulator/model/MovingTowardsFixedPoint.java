@@ -23,7 +23,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 	}
 
 	public String toString() {
-		return "todos los cuerpos caen hacia el centro del universo, i.e. tienen una aceleracion fija.";
+		return "Moving towards" + o.toString() + "with constant acceleration" +g ;
 	}
 	public double getG() {
 		return g;

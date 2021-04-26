@@ -26,7 +26,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
 	}
 	
 	public String toString() {
-		return "Dos cuerpos Bi y Bj aplican una fuerza gravitacional uno sobre otro, i.e., se atraen mutuamente.";
+		return "Newton’s Universal Gravitation with G=" + g;
 	}
 	public double getG() {
 		return g;
