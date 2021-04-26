@@ -7,7 +7,7 @@ import simulator.model.ForceLaws;
 import simulator.model.MovingTowardsFixedPoint;
 
 public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
-	private final double g = 9.81;
+	private final double g = -9.81;
 
 	public MovingTowardsFixedPointBuilder() {
 		super("mtfp", "fuerza que atrae cuerpos a un punto fijo");
