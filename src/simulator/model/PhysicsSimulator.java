@@ -11,6 +11,7 @@ public class PhysicsSimulator {
 	private ForceLaws forceLaw;
 	private double dt;
 	private List<Body> bs;
+	private List<SimulatorObserver> so;
 	private double currentT;
 	
 	public PhysicsSimulator(ForceLaws forceLaw, double dt) throws IllegalArgumentException {
@@ -20,6 +21,8 @@ public class PhysicsSimulator {
 		this.dt = dt;
 		currentT = 0.0;
 		bs = new ArrayList<Body>();		//excepcion pdf
+		so = new ArrayList<SimulatorObserver>();		//excepcion pdf
+
 	}
 
 	public void advance() {
@@ -31,11 +34,18 @@ public class PhysicsSimulator {
 			bs.get(i).move(dt);
 		}
 		currentT += dt;
+		for(SimulatorObserver o: so) {
+			o.onAdvance(bs, currentT);
+		}
 	}
 	
 	public void addBody(Body b) throws IllegalArgumentException {
 		if(bs.contains(b)) throw new IllegalArgumentException();
 		bs.add(b);
+		for(SimulatorObserver o: so) {
+			o.onBodyAdded(bs, b);
+		}
+		
 	}
 	
 	public JSONObject getState() {
@@ -80,13 +90,28 @@ public class PhysicsSimulator {
 	public void reset() {
 		bs.clear();
 		currentT = 0;
+		for(SimulatorObserver o: so) {
+			o.onReset(bs, currentT, dt, null);
+		}
 	}
 	public void setDeltaTime(double dt) {
 	 if(dt<=0) throw new IllegalArgumentException("Set delta time exception");
 	 this.dt = dt;
+	 for(SimulatorObserver o: so) {
+			o.onDeltaTimeChanged(dt);
+		}
 	}
 	public void setForceLawsLaws(ForceLaws forceLaws) {
 		 if(forceLaws.equals(null)) throw new IllegalArgumentException("setForceLawsLaws exception");
 		this.forceLaw = forceLaws;
+		for(SimulatorObserver o: so) {
+			o.onForceLawsChanged(null);
+		}
+	}
+	public void addObserver(SimulatorObserver o) {
+		if(!so.contains(o)) {
+			so.add(o);
+			o.onRegister(bs, currentT, dt, null);
+		}
 	}
 }
