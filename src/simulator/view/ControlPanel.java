@@ -1,3 +1,5 @@
+package simulator.view;
+
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -79,5 +81,5 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	@Override
 	public void onForceLawsChanged(String fLawsDesc) {
 		// TODO Auto-generated method stub
-		
+	}	
 }
