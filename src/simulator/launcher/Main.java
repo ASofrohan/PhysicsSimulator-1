@@ -296,7 +296,6 @@ public class Main {
 
 	private static void start(String[] args) throws Exception {
 		parseArgs(args);
-		System.out.println("toca batchmode");
 		startBatchMode();
 	}
 
