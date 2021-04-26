@@ -289,7 +289,7 @@ public class Main {
 		
 		StateComparator cmp = _stateComparatorFactory.createInstance(_stateComparatorInfo);
 		
-		Controller controller = new Controller(sim, _bodyFactory);
+		Controller controller = new Controller(sim, _bodyFactory, _forceLawsFactory);
 		controller.loadBodies(inStream);
 		controller.run(_steps, outStream, expStream, cmp);
 	}
