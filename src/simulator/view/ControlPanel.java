@@ -1,8 +1,16 @@
 package simulator.view;
 
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import simulator.control.Controller;
@@ -13,15 +21,35 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	// ...
 	private Controller _ctrl;
 	private boolean _stopped;
+	private JToolBar toolBar;
+	private JButton load;
+	private JFileChooser chooser;
+	
 	ControlPanel(Controller ctrl) {
 		_ctrl = ctrl;
 		_stopped = true;
 		initGUI();
 	    _ctrl.addObserver(this);
-	    }
+	    chooser = new JFileChooser(System.getProperty("user.dir") + "/resources/examples");
+	}
+	
 	private void initGUI() {
 		// TODO build the tool bar by adding buttons, etc.
-		}
+		this.toolBar = new JToolBar();
+		this.load = new JButton();
+		toolBar.add(load);
+		load.setIcon(new ImageIcon("resources\\icons\\open.png"));
+		
+		load.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                load();
+
+            }
+        });
+        load.setToolTipText("Para cargar simulacion");
+		
+	}
 	
 	// other private/protected methods
 	// ...
@@ -50,6 +78,21 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 			// TODO enable all buttons
 		}
 	}
+	
+	private void load() {
+        int v = chooser.showOpenDialog(this.getParent());
+        if (v==JFileChooser.APPROVE_OPTION){
+            File file = chooser.getSelectedFile();
+            System.out.println("loading " + file.getName());
+            _ctrl.reset();
+            try {
+            _ctrl.loadBodies(new FileInputStream(file));
+            }catch(FileNotFoundException e) {
+            	e.printStackTrace();
+            }
+        }
+        else System.out.println("Load cancelled by user");
+    }
 	
 	// SimulatorObserver methods
 		// ...
