@@ -1,5 +1,6 @@
 package simulator.view;
 
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
@@ -26,13 +28,16 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	private JButton load;
 	private JFileChooser chooser;
 	private JButton physics;
+	private JButton play;
+	private JSpinner steps;
+	private TextField deltaTime;
 	
 	ControlPanel(Controller ctrl) {
+		chooser = new JFileChooser(System.getProperty("user.dir") + "/resources/examples");
 		_ctrl = ctrl;
 		_stopped = true;
 		initGUI();
 	    _ctrl.addObserver(this);
-	    chooser = new JFileChooser(System.getProperty("user.dir") + "/resources/examples");
 	}
 	
 	private void initGUI() {
@@ -52,14 +57,25 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		
 		this.physics = new JButton();
 		toolBar.add(physics);
-		load.setIcon(new ImageIcon("resources\\icons\\physics.png"));
-		load.addActionListener(new ActionListener() {
+		physics.setIcon(new ImageIcon("resources\\icons\\physics.png"));
+		physics.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 // hay que hacerlo
             }
         });
 		physics.setToolTipText("Force law selector");
+		
+		this.play = new JButton();
+		toolBar.add(play);
+		play.setIcon(new ImageIcon("resources\\icons\\physics.png"));
+		play.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                _stopped = false;
+                enableToolBar(false);
+            }
+        });
+		play.setToolTipText("Start simulation");
 	}
 	
 	// other private/protected methods
@@ -88,6 +104,13 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 			_stopped = true;
 			// TODO enable all buttons
 		}
+	}
+	
+	private void enableToolBar(boolean enable) {
+		this.load.setEnabled(enable);
+		this.physics.setEnabled(enable);
+		this.play.setEnabled(enable);
+		
 	}
 	
 	private void load() {
