@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +25,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	private JToolBar toolBar;
 	private JButton load;
 	private JFileChooser chooser;
+	private JButton physics;
 	
 	ControlPanel(Controller ctrl) {
 		_ctrl = ctrl;
@@ -36,19 +38,28 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	private void initGUI() {
 		// TODO build the tool bar by adding buttons, etc.
 		this.toolBar = new JToolBar();
+		
 		this.load = new JButton();
 		toolBar.add(load);
 		load.setIcon(new ImageIcon("resources\\icons\\open.png"));
-		
 		load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 load();
-
             }
         });
-        load.setToolTipText("Para cargar simulacion");
+        load.setToolTipText("Load simulation");
 		
+		this.physics = new JButton();
+		toolBar.add(physics);
+		load.setIcon(new ImageIcon("resources\\icons\\physics.png"));
+		load.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                // hay que hacerlo
+            }
+        });
+		physics.setToolTipText("Force law selector");
 	}
 	
 	// other private/protected methods
