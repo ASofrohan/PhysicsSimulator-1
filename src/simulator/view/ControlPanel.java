@@ -31,6 +31,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	private JButton play;
 	private JSpinner steps;
 	private TextField deltaTime;
+	private ChangeForceClassDialog dialogoF;
+
 	
 	ControlPanel(Controller ctrl) {
 		chooser = new JFileChooser(System.getProperty("user.dir") + "/resources/examples");
@@ -61,7 +63,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		physics.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                // hay que hacerlo
+            	MostrarCustomForce();
             }
         });
 		physics.setToolTipText("Force law selector");
@@ -127,6 +129,11 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         }
         else System.out.println("Load cancelled by user");
     }
+	
+	private void MostrarCustomForce() {
+		dialogoF.setLocationRelativeTo(null);
+		dialogoF.Mostrar();
+	}
 	
 	// SimulatorObserver methods
 		// ...
