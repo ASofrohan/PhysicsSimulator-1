@@ -18,7 +18,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.table.AbstractTableModel;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import simulator.control.Controller;
@@ -30,7 +32,67 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	private JComboBox<String> idsc;
 	private Controller _ctrl;
 
+	private class JsonParamTable extends AbstractTableModel {
 
+		private static final long serialVersionUID = 1L;		
+		private String[] _header = { "Key", "Value", "description" };
+		private JSONObject ForceData;
+
+		public JsonParamTable(JSONObject jo) {
+			ForceData = null;
+		}
+
+		public void update() {
+			fireTableDataChanged();
+		}
+		
+		@Override
+		public String getColumnName(int column) {
+			return _header[column];
+		}
+
+		public void setForceData(JSONObject jo) {
+			ForceData = jo;
+			update();
+		}
+		
+		
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			if(column ==1)
+				return true;
+			
+			return false;
+		}
+		
+		public int getColumnCount() {
+			return _header.length;
+		}
+		public int getRowCount() {
+			return ForceData == null ? 0 : ForceData.length();
+		}
+		
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			Object s = null;
+			JSONArray arr = ForceData.names();
+			switch (columnIndex) {
+			case 0:
+				s =  arr.get(rowIndex);
+				break;
+			case 1:
+				s = "";
+				break;
+			case 2:
+				s = ForceData.getString(arr.getString(rowIndex));
+				break;
+			}
+			return s;
+		}
+	
+		
+		
+	
+	}
 	public  ChangeForceClassDialog(Controller controller) {
 		_ctrl = controller;
 		_ctrl.addObserver(this);
