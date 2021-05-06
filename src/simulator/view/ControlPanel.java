@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JToolBar;
@@ -29,6 +30,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 	private JFileChooser chooser;
 	private JButton physics;
 	private JButton play;
+	private JButton exit;
+	private JButton stop;
 	private JSpinner steps;
 	private TextField deltaTime;
 	private ChangeForceClassDialog dialogoF;
@@ -78,6 +81,30 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             }
         });
 		play.setToolTipText("Start simulation");
+		
+		this.stop = new JButton();
+		toolBar.add(stop);
+		stop.setIcon(new ImageIcon("resources\\icons\\stop.png"));
+		stop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	_stopped = true;
+                enableToolBar(true);
+            }
+        });
+		stop.setToolTipText("End simulation");
+		
+		this.exit = new JButton();
+		toolBar.add(exit);
+		exit.setIcon(new ImageIcon("resources\\icons\\stop.png"));
+		exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+            	        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            	    System.exit(0);
+            	}
+            }
+            });
+		exit.setToolTipText("Exit simulator");
 	}
 	
 	// other private/protected methods
