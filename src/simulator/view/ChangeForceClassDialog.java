@@ -37,9 +37,12 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		private static final long serialVersionUID = 1L;		
 		private String[] _header = { "Key", "Value", "description" };
 		private JSONObject ForceData;
+		private String[] _data;
+
 
 		public JsonParamTable(JSONObject jo) {
-			ForceData = null;
+			ForceData = jo;
+			_data = new String [jo.length()];
 		}
 
 		public void update() {
@@ -65,6 +68,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 			return false;
 		}
 		
+		
 		public int getColumnCount() {
 			return _header.length;
 		}
@@ -80,13 +84,18 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 				s =  arr.get(rowIndex);
 				break;
 			case 1:
-				s = "";
+				s = _data[rowIndex];
 				break;
 			case 2:
 				s = ForceData.getString(arr.getString(rowIndex));
 				break;
 			}
 			return s;
+		}
+		
+		@Override
+		public void setValueAt(Object o, int rowIndex, int columnIndex) {
+			_data[rowIndex] = o.toString();
 		}
 	
 		
