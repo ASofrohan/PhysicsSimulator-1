@@ -18,6 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import org.json.JSONArray;
@@ -29,8 +30,11 @@ import simulator.model.SimulatorObserver;
 
 
 public class ChangeForceClassDialog extends JDialog  implements SimulatorObserver {
-	private JComboBox<String> idsc;
+	private JComboBox<String> comForcesBob;
 	private Controller _ctrl;
+	private JsonParamTable ParamTable;
+	private JTable _eventsTable;
+
 
 	private class JsonParamTable extends AbstractTableModel {
 
@@ -109,29 +113,23 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	}
 	public void Mostrar() {
 		this.setVisible(true);
-		idsc.removeAllItems();
+		comForcesBob.removeAllItems();
 		List<JSONObject> l = _ctrl.getForceLawsInfo();
 		for(JSONObject jo : l) {
-			idsc.addItem(jo.getString("desc"));
+			comForcesBob.addItem(jo.getString("desc"));
 			}
 		
 		
 	}
 	
 	private void initGUI(){
-		this.setLayout(new BorderLayout(15, 20));
-		JLabel descripcion   = new JLabel("Select a force law and provide values for the parameters "
+		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1).getJSONObject("data"));
+		_eventsTable = new JTable(ParamTable);
+
+		JLabel descripcion  = new JLabel("Select a force law and provide values for the parameters "
 			+ "in the Value column (default values are used for parameters with no value) ");
-		this.add(descripcion, BorderLayout.NORTH);
 		
-		JPanel centro = new JPanel();
-		centro.setLayout(new BoxLayout(centro, BoxLayout.X_AXIS));
-		
-		
-		
-		this.add(centro, BorderLayout.CENTER);
-				
-		JPanel botones = new JPanel();
+	
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -149,19 +147,15 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 			}			
 		});
 		
-		JLabel Fuerzas   = new JLabel("Forcelaw:");
-		centro.add(Fuerzas);
-		idsc = new JComboBox<String>();
-		idsc.setMaximumSize(new Dimension(500,20));
-		botones.add(idsc);
-		
-		botones.add(cancel);
-		botones.add(ok);
-		this.add(botones, BorderLayout.SOUTH);
+		JLabel Fuerzas = new JLabel("Forcelaw:");
+		comForcesBob = new JComboBox<String>();
+		for(int i =0; i< _ctrl.getForceLawsInfo().size(); i++) {
+			comForcesBob.addItem(_ctrl.getForceLawsInfo().get(i).getString("type"));
+			
+		}
 		
 		
-		this.setPreferredSize(new Dimension(700, 200));
-		this.pack();
+		
 
 	}
 
