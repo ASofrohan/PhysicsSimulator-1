@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -78,6 +79,10 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             public void actionPerformed(ActionEvent e) {
                 _stopped = false;
                 enableToolBar(false);
+                _ctrl.setDeltaTime((Integer.parseInt(deltaTime.getText())));
+                run_sim((int)steps.getValue());
+                
+                
             }
         });
 		play.setToolTipText("Start simulation");
@@ -117,6 +122,9 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 			} catch (Exception e) {
 				// TODO show the error in a dialog box
 				// TODO enable all buttons
+				JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "ERROR",
+				        JOptionPane.ERROR_MESSAGE);
+				enableToolBar(true);
 				_stopped = true;
 				return;
 				}
@@ -131,6 +139,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		} 
 		else {
 			_stopped = true;
+			enableToolBar(true);
 			// TODO enable all buttons
 		}
 	}
