@@ -12,10 +12,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JToolBar;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 import simulator.control.Controller;
@@ -99,8 +101,14 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		stop.setToolTipText("End simulation");
 		
 		this.exit = new JButton();
+		
+		toolBar.add(new JLabel("Ticks:"));
+		SpinnerNumberModel sm= new SpinnerNumberModel(1,1,999,1);
+		steps = new JSpinner(sm);
+		
+		
 		toolBar.add(exit);
-		exit.setIcon(new ImageIcon("resources\\icons\\stop.png"));
+		exit.setIcon(new ImageIcon("resources\\icons\\exit.png"));
 		exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
