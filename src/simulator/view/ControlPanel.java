@@ -156,6 +156,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		this.load.setEnabled(enable);
 		this.physics.setEnabled(enable);
 		this.play.setEnabled(enable);
+		this.steps.setEnabled(enable);
 		
 	}
 	
