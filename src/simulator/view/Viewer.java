@@ -147,16 +147,16 @@ public class Viewer extends JComponent implements SimulatorObserver {
 				 drawLineWithArrow(gr,
 						 _centerX + (int) Math.round(x/_scale), 
 						 _centerY +(int) Math.round(y/_scale), 
-						 _centerX + (int) Math.round((x+b.getForce().direction().getX())),
-						 _centerY+(int) Math.round((y+b.getForce().direction().getY())), 
+						 _centerX + (int) Math.round((_centerX + (int) Math.round(x/_scale)+b.getForce().direction().getX())), // no sé cómo va el escale. pero hay que poner centro+posCuerpoX+directionX*constante
+						 _centerY+(int) Math.round(( _centerY +(int) Math.round(y/_scale)+b.getForce().direction().getY())), 
 						 2, 2, Color.red, Color.red);
 				 
 				 //velocity
 				 drawLineWithArrow(gr, 
 						 _centerX + (int) Math.round(x/_scale), 
 						 _centerY+ (int) Math.round(y/_scale), 
-						 _centerX + (int) Math.round((x+b.getVelocity().direction().getX())/_scale), 
-						 _centerY + (int) Math.round((y+b.getVelocity().direction().getY())/_scale), 
+						 _centerX + (int) Math.round((x+b.getVelocity().direction().getX())), 
+						 _centerY + (int) Math.round((y+b.getVelocity().direction().getY())), 
 						 2, 2, Color.green, Color.green);
 			 }
 		 }
