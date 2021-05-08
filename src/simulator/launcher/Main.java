@@ -22,8 +22,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
 
-import Excepciones.NullValue;
-import Excepciones.ValuesException;
 import simulator.control.Controller;
 import simulator.control.StateComparator;
 import simulator.factories.BasicBodyBuilder;
@@ -39,7 +37,6 @@ import simulator.factories.NoForceBuilder;
 import simulator.model.Body;
 import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;
-import simulator.model.TrafficSimulator;
 import simulator.view.MainWindow;
 
 public class Main {
