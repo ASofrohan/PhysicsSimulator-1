@@ -144,12 +144,19 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			 gr.drawString(b.getId(),_centerX +1 + (int) (x/_scale),_centerY - 1 + (int) (y/_scale));
 			 if(_showVectors) {
 				 //force
-				 drawLineWithArrow(g, (int) Math.round(x/_scale), (int) Math.round(y/_scale), 
-						 (int) Math.round((x+b.getForce().getX())/_scale), (int) Math.round((y+b.getForce().getY())/_scale), 
+				 drawLineWithArrow(gr,
+						 _centerX + (int) Math.round(x/_scale), 
+						 _centerY +(int) Math.round(y/_scale), 
+						 _centerX + (int) Math.round((x+b.getForce().direction().getX())),
+						 _centerY+(int) Math.round((y+b.getForce().direction().getY())), 
 						 2, 2, Color.red, Color.red);
+				 
 				 //velocity
-				 drawLineWithArrow(g, (int) Math.round(x/_scale), (int) Math.round(y/_scale), 
-						 (int) Math.round((x+b.getVelocity().getX())/_scale), (int) Math.round((y+b.getVelocity().getY())/_scale), 
+				 drawLineWithArrow(gr, 
+						 _centerX + (int) Math.round(x/_scale), 
+						 _centerY+ (int) Math.round(y/_scale), 
+						 _centerX + (int) Math.round((x+b.getVelocity().direction().getX())/_scale), 
+						 _centerY + (int) Math.round((y+b.getVelocity().direction().getY())/_scale), 
 						 2, 2, Color.green, Color.green);
 			 }
 		 }
