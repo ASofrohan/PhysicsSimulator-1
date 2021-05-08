@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -132,6 +133,9 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             }
             });
 		exit.setToolTipText("Exit simulator");
+		
+		this.setLayout(new BorderLayout());
+		this.setPreferredSize(new Dimension(200, 50));
 	}
 	
 	// other private/protected methods
