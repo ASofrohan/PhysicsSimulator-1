@@ -26,7 +26,6 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 		private JLabel _numOfBodies;  // for number of bodies
 		
 		StatusBar(Controller ctrl) {
-			ctrl.addObserver(this);
 			_ctrl = ctrl; 
 			steps=0;
 			bodies = 0;
@@ -35,6 +34,8 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 			_currLaws = new JLabel("Laws:: "+String.valueOf(this.law));     
 			_numOfBodies = new JLabel("Bodies: "+String.valueOf(this.bodies));
 			initGUI();
+			ctrl.addObserver(this);
+
 		}
 		
 		private void initGUI() {

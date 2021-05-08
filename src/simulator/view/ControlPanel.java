@@ -83,7 +83,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 
 		this.play = new JButton();
 		toolBar.add(play);
-		play.setIcon(new ImageIcon("resources\\icons\\physics.png"));
+		play.setIcon(new ImageIcon("resources\\icons\\run.png"));
 		play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 _stopped = false;
