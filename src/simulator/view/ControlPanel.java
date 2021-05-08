@@ -109,12 +109,12 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		
 		
 		toolBar.add(new JLabel("Steps:"));
-		SpinnerNumberModel sm= new SpinnerNumberModel(1,1,999,1);
+		SpinnerNumberModel sm= new SpinnerNumberModel(1,1,99999,10);
 		steps = new JSpinner(sm);
 		toolBar.add(steps);
 		
 		toolBar.add(new JLabel("Delta-time:"));
-		deltaTime = new TextField();
+		deltaTime = new TextField("10");
 		toolBar.add(deltaTime);
 		
 		toolBar.add(Box.createGlue());
