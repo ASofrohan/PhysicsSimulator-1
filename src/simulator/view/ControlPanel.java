@@ -1,5 +1,6 @@
 package simulator.view;
 
+import java.awt.BorderLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -45,6 +47,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		_ctrl = ctrl;
 		_stopped = true;
 		initGUI();
+		this.add(toolBar, BorderLayout.PAGE_START);		
 	    _ctrl.addObserver(this);
 	}
 	
@@ -62,6 +65,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
             }
         });
         load.setToolTipText("Load simulation");
+        
+        toolBar.addSeparator();
 		
 		this.physics = new JButton();
 		toolBar.add(physics);
@@ -74,6 +79,8 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         });
 		physics.setToolTipText("Force law selector");
 		
+        toolBar.addSeparator();
+
 		this.play = new JButton();
 		toolBar.add(play);
 		play.setIcon(new ImageIcon("resources\\icons\\physics.png"));
@@ -100,7 +107,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
         });
 		stop.setToolTipText("End simulation");
 		
-		this.exit = new JButton();
 		
 		toolBar.add(new JLabel("Steps:"));
 		SpinnerNumberModel sm= new SpinnerNumberModel(1,1,999,1);
@@ -111,7 +117,10 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		deltaTime = new TextField();
 		toolBar.add(deltaTime);
 		
-		
+		toolBar.add(Box.createGlue());
+
+		this.exit = new JButton();
+
 		toolBar.add(exit);
 		exit.setIcon(new ImageIcon("resources\\icons\\exit.png"));
 		exit.addActionListener(new ActionListener() {
@@ -162,6 +171,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		this.physics.setEnabled(enable);
 		this.play.setEnabled(enable);
 		this.steps.setEnabled(enable);
+		this.deltaTime.setEnabled(enable);
 		
 	}
 	
