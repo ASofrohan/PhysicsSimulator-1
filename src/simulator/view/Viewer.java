@@ -142,10 +142,16 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			 gr.fillOval(_centerX + (int) (x/_scale), _centerY + (int) (y/_scale), 5, 5);
 			 gr.setColor(Color.black);
 			 gr.drawString(b.getId(),_centerX +1 + (int) (x/_scale),_centerY - 1 + (int) (y/_scale));
-			 //force
-			 
-			 //
-			
+			 if(_showVectors) {
+				 //force
+				 drawLineWithArrow(g, (int) Math.round(x), (int) Math.round(y), 
+						 (int) Math.round(x+b.getForce().getX()), (int) Math.round(y+b.getForce().getY()), 
+						 2, 2, Color.red, Color.red);
+				 //velocity
+				 drawLineWithArrow(g, (int) Math.round(x), (int) Math.round(y), 
+						 (int) Math.round(x+b.getVelocity().getX()), (int) Math.round(y+b.getVelocity().getY()), 
+						 2, 2, Color.green, Color.green);
+			 }
 		 }
 		
 		// TODO draw help if _showHelp is true
@@ -202,22 +208,30 @@ public class Viewer extends JComponent implements SimulatorObserver {
 	@Override
 	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		// TODO Auto-generated method stub
-		
+		_bodies = bodies;
+		autoScale();
+		repaint();
 	}
 	@Override
 	public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		// TODO Auto-generated method stub
-		
+		_bodies = bodies;
+		autoScale();
+		repaint();
 	}
 	@Override
 	public void onBodyAdded(List<Body> bodies, Body b) {
 		// TODO Auto-generated method stub
-		
+		_bodies = bodies;
+		autoScale();
+		repaint();
 	}
 	@Override
 	public void onAdvance(List<Body> bodies, double time) {
 		// TODO Auto-generated method stub
-		
+		_bodies = bodies;
+		autoScale();
+		repaint();
 	}
 	@Override
 	public void onDeltaTimeChanged(double dt) {
