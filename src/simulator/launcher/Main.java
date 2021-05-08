@@ -44,8 +44,10 @@ public class Main {
 	private final static String _forceLawsDefaultValue = "nlug";
 	private final static String _stateComparatorDefaultValue = "epseq";
 
+
 	// some attributes to stores values corresponding to command-line parameters
 	//
+	private static String mode = "batch";
 	private static Double _dtime = null;
 	private static String _inFile = null;
 	private static String _outFile = null;
@@ -89,6 +91,7 @@ public class Main {
 			CommandLine line = parser.parse(cmdLineOptions, args);
 
 			parseHelpOption(line, cmdLineOptions);
+			parseModeOption(line);
 			parseInFileOption(line);
 			// TODO add support of -o, -eo, and -s (define corresponding parse methods)
 			parseStepsOption(line);
@@ -162,6 +165,10 @@ public class Main {
 						+ factoryPossibleValues(_stateComparatorFactory) + ". Default value: '"
 						+ _stateComparatorDefaultValue + "'.")
 				.build());
+		
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg()
+				.desc("Execution Mode. Possible values: ’batch’(Batch mode), ’gui’ (Graphical UserInterface mode). Default value: ’batch’.").build());
+
 		return cmdLineOptions;
 	}
 
@@ -180,6 +187,11 @@ public class Main {
 		s = s + ". You can provide the 'data' json attaching :{...} to the tag, but without spaces.";
 		return s;
 	}
+	
+	private static void parseModeOption(CommandLine line) throws ParseException{
+		mode = line.getOptionValue("m");
+		
+	}
 
 	private static void parseHelpOption(CommandLine line, Options cmdLineOptions) {
 		if (line.hasOption("h")) {
@@ -191,7 +203,7 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
+		if (_inFile == null && mode.equals("batch")) {
 			throw new ParseException("In batch mode an input file of bodies is required");
 		}
 	}
