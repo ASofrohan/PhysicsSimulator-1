@@ -6,9 +6,12 @@ package simulator.launcher;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -19,6 +22,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
 
+import Excepciones.NullValue;
+import Excepciones.ValuesException;
 import simulator.control.Controller;
 import simulator.control.StateComparator;
 import simulator.factories.BasicBodyBuilder;
@@ -34,6 +39,8 @@ import simulator.factories.NoForceBuilder;
 import simulator.model.Body;
 import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;
+import simulator.model.TrafficSimulator;
+import simulator.view.MainWindow;
 
 public class Main {
 
@@ -305,10 +312,36 @@ public class Main {
 		controller.loadBodies(inStream);
 		controller.run(_steps, outStream, expStream, cmp);
 	}
+	
+	private static void startGUIMode() throws IOException {
+		PhysicsSimulator sim = new PhysicsSimulator(_forceLawsFactory.createInstance(_forceLawsInfo), _dtime);
+		Controller ctrl = new Controller(sim, _bodyFactory, _forceLawsFactory );
+		if(_inFile != null) {
+			InputStream in = new FileInputStream(new File(_inFile));
+			ctrl.loadBodies(in);
+			in.close();
+		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+			new MainWindow(ctrl);
+			}
+			});
+
+		
+		System.out.println("Done!");
+	}
+	
 
 	private static void start(String[] args) throws Exception {
 		parseArgs(args);
-		startBatchMode();
+		if(mode.equals("batch")) {
+			startBatchMode();
+		}
+		else if(mode.equals("gui")) 
+			startGUIMode();
+		else
+			System.err.println("Console o Gui mal escrito");
 	}
 
 	public static void main(String[] args) {
