@@ -144,20 +144,30 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			 gr.drawString(b.getId(),_centerX +1 + (int) (x/_scale),_centerY - 1 + (int) (y/_scale));
 			 if(_showVectors) {
 				 //force
-				 drawLineWithArrow(gr,
-						 _centerX + (int) Math.round(x/_scale), 
-						 _centerY +(int) Math.round(y/_scale), 
-						 _centerX + (int) Math.round((_centerX + (int) Math.round(x/_scale)+b.getForce().direction().getX())), // no sé cómo va el escale. pero hay que poner centro+posCuerpoX+directionX*constante
-						 _centerY+(int) Math.round(( _centerY +(int) Math.round(y/_scale)+b.getForce().direction().getY())), 
-						 2, 2, Color.red, Color.red);
-				 
+				 drawLineWithArrow(
+						 gr,
+						 _centerX + (int) (x/_scale),  //x1
+						 _centerY + (int) (y/_scale),   //y1
+						 _centerX + (int) (x/_scale) + (int)(30*b.getForce().direction().getX()), //x2
+						 _centerY + (int) (y/_scale) + (int)(30*b.getForce().direction().getY()), //y2
+						 4,
+						 4,
+						 Color.red,
+						 Color.red
+						 );
+						 
+						
 				 //velocity
 				 drawLineWithArrow(gr, 
-						 _centerX + (int) Math.round(x/_scale), 
-						 _centerY+ (int) Math.round(y/_scale), 
-						 _centerX + (int) Math.round((x+b.getVelocity().direction().getX())), 
-						 _centerY + (int) Math.round((y+b.getVelocity().direction().getY())), 
-						 2, 2, Color.green, Color.green);
+						 _centerX + (int) (x/_scale),  //x1
+						 _centerY + (int) (y/_scale),   //y1
+						 _centerX + (int) (x/_scale) + (int)(30*b.getVelocity().direction().getX()), //x2
+						 _centerY + (int) (y/_scale) + (int)(30*b.getVelocity().direction().getY()), //y2
+						 4,
+						 4, 
+						 Color.green, 
+						 Color.green);
+						 
 			 }
 		 }
 		
@@ -166,8 +176,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			 gr.setColor(Color.red);
 			 String s0 = "h: toggle help, v: toggle vectors, +: zoom-in, -: zoom-out, =: fit";
 			 String s1 = "Scaling ratio: " + _scale;
-			 gr.drawString(s0, _centerX - 300, _centerY - 180);
-			 gr.drawString(s1, _centerX -300, _centerY - 200);
+			 gr.drawString(s0, _centerX - this.getWidth()/2, _centerY - this.getHeight()/2+20);
+			 gr.drawString(s1, _centerX - this.getWidth()/2, _centerY - this.getHeight()/2+40);
 		 }
 	}
 	

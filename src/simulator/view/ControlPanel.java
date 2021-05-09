@@ -110,7 +110,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		
 		
 		toolBar.add(new JLabel("Steps:"));
-		SpinnerNumberModel sm= new SpinnerNumberModel(1,1,99999,10);
+		SpinnerNumberModel sm= new SpinnerNumberModel(1,1,99999,100);
 		steps = new JSpinner(sm);
 		toolBar.add(steps);
 		
