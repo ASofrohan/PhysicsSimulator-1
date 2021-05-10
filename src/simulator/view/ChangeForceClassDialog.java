@@ -132,13 +132,14 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	}
 	
 	public void Mostrar() {
-		this.setVisible(true);
 		comForcesBob.removeAllItems();
 		List<JSONObject> l = _ctrl.getForceLawsInfo();
 		for(JSONObject jo : l) {
 			comForcesBob.addItem(jo.getString("desc"));
 			}
-		
+		this.pack();
+		this.setVisible(true);
+
 		
 	}
 	
@@ -162,7 +163,16 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		
 		//Anyadir tabla
 		JPanel p = new JPanel();
+		_eventsTable.setPreferredSize(new Dimension(100, 200));
+		_eventsTable.setMaximumSize(new Dimension(100, 200));
+		_eventsTable.setMinimumSize(new Dimension(100, 200));
 		p.add(new JScrollPane(_eventsTable));
+		
+
+		p.setPreferredSize(new Dimension(100, 200));
+		p.setMaximumSize(new Dimension(100, 200));
+		p.setMinimumSize(new Dimension(100, 200));
+
 		main.add(p);
 		
 		//Anyadir zona combobox
@@ -171,6 +181,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		combopanel.setAlignmentX(CENTER_ALIGNMENT);
 		combopanel.add(Fuerzas);
 		combopanel.add(comForcesBob);
+		main.add(combopanel);
 		
 		//Anyadir zona botones
 		JPanel buttons = new JPanel();
@@ -188,15 +199,21 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				updateForce();
-
+				setVisible(false);
 			}			
 		});
 		buttons.add(cancel);
 		buttons.add(ok);
+		main.add(buttons);
+		
+		//main.setPreferredSize(new Dimension(1000, 1000));
+		
 		
 
-				
-		this.add(main);
+		setContentPane(main);
+		//this.add(main);
+		this.pack();
+
 
 
 	}

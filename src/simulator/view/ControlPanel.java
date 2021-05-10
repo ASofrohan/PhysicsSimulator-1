@@ -48,7 +48,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		_ctrl = ctrl;
 		_stopped = true;
 		dialogoF = new ChangeForceClassDialog(_ctrl);
-		dialogoF.setPreferredSize(new Dimension(200, 200));
 		initGUI();
 		this.add(toolBar, BorderLayout.PAGE_START);		
 	    _ctrl.addObserver(this);
