@@ -47,6 +47,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver {
 		chooser = new JFileChooser(System.getProperty("user.dir") + "/resources/examples");
 		_ctrl = ctrl;
 		_stopped = true;
+		dialogoF = new ChangeForceClassDialog(_ctrl);
 		initGUI();
 		this.add(toolBar, BorderLayout.PAGE_START);		
 	    _ctrl.addObserver(this);

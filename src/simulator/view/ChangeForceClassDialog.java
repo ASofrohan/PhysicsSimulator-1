@@ -41,12 +41,15 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		private static final long serialVersionUID = 1L;		
 		private String[] _header = { "Key", "Value", "description" };
 		private JSONObject ForceData;
+		private JSONObject Force;
 		private String[] _data;
 
 
 		public JsonParamTable(JSONObject jo) {
-			ForceData = jo;
-			_data = new String [jo.length()];
+			ForceData = jo.getJSONObject("data");
+			//_data = new String [ForceData.getJSONObject("data").length()];
+			Force = jo;
+			update();
 		}
 
 		public void update() {
@@ -59,7 +62,9 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		}
 
 		public void setForceData(JSONObject jo) {
-			ForceData = jo;
+			ForceData = jo.getJSONObject("data");
+			_data = new String [ForceData.getJSONObject("data").length()];
+			Force = jo;
 			update();
 		}
 		
@@ -77,12 +82,12 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 			return _header.length;
 		}
 		public int getRowCount() {
-			return ForceData == null ? 0 : ForceData.length();
+			return ForceData == null ? 0 : ForceData.getJSONObject("data").length();
 		}
 		
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			Object s = null;
-			JSONArray arr = ForceData.names();
+			JSONArray arr = ForceData.getJSONObject("data").names();
 			switch (columnIndex) {
 			case 0:
 				s =  arr.get(rowIndex);
@@ -101,16 +106,30 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		public void setValueAt(Object o, int rowIndex, int columnIndex) {
 			_data[rowIndex] = o.toString();
 		}
-	
 		
+		public JSONObject getData() {
+			JSONObject jo = new JSONObject();
+			jo = Force;
+			JSONObject jo1 = new JSONObject();
+			jo1 = ForceData;
+			JSONObject nuevoParams = new JSONObject();
+			JSONArray arr = ForceData.getJSONObject("data").names();
+			for(int i = 0; i< ForceData.getJSONObject("data").length(); i++) {
+				nuevoParams.put(arr.getString(i), _data[i]);
+			}
+			jo1.put("data", nuevoParams);
+			jo.put("data", jo1);
+			return jo;			
+		}
 		
-	
 	}
+	
 	public  ChangeForceClassDialog(Controller controller) {
 		_ctrl = controller;
 		_ctrl.addObserver(this);
 		this.initGUI();
 	}
+	
 	public void Mostrar() {
 		this.setVisible(true);
 		comForcesBob.removeAllItems();
@@ -123,7 +142,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	}
 	
 	private void initGUI(){
-		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1).getJSONObject("data"));
+		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1));
 		_eventsTable = new JTable(ParamTable);
 
 		JLabel descripcion  = new JLabel("Select a force law and provide values for the parameters "
@@ -142,7 +161,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		ok.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				updateForce();
 
 			}			
 		});
@@ -154,12 +173,28 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 			
 		}
 		
+		this.add(Fuerzas);
+		this.add(comForcesBob);
+		this.add(descripcion);
+		this.add(cancel);
+		this.add(ok);
+		this.add(_eventsTable);
+
+
 		
 		
 
 	}
 
+	
+	private void updateForce(){
+		_ctrl.setForceLaws(ParamTable.getData());
 
+	}
+	
+
+	
+	
 	
 	@Override
 	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
