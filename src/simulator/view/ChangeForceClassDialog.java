@@ -48,7 +48,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 
 		public JsonParamTable(JSONObject jo) {
 			ForceData = jo.getJSONObject("data");
-			//_data = new String [ForceData.getJSONObject("data").length()];
+			_data = new String [ForceData.getJSONObject("data").length()];
 			Force = jo;
 			update();
 		}
@@ -143,36 +143,38 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	}
 	
 	private void initGUI(){
-		
+		//Inicializaciones
 		JLabel Fuerzas = new JLabel("Forcelaw:");
 		comForcesBob = new JComboBox<String>();
 		for(int i =0; i< _ctrl.getForceLawsInfo().size(); i++) {
 			comForcesBob.addItem(_ctrl.getForceLawsInfo().get(i).getString("type"));
 			
 		}
-		
 		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1));
 		_eventsTable = new JTable(ParamTable);
-
-		JPanel main = new JPanel(new BorderLayout());
-		main.add(new JLabel("Select a force law and provide values for the parameters "
-				+ "in the Value column (default values are used for parameters with no value) "), BorderLayout.NORTH);
+		JLabel description = new JLabel("Select a force law and provide values for the parameters "
+				+ "in the Value column (default values are used for parameters with no value) ");
 		
-		JPanel p = new JPanel(new BorderLayout());
+		//Anyadir descripcion
+		JPanel main = new JPanel();
+		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+		main.add(description);
+		
+		//Anyadir tabla
+		JPanel p = new JPanel();
 		p.add(new JScrollPane(_eventsTable));
-		main.add(p, BorderLayout.CENTER);
+		main.add(p);
 		
-		JPanel downPanel = new JPanel(new BorderLayout());
+		//Anyadir zona combobox
+		JPanel combopanel = new JPanel();
+		combopanel.setLayout(new BoxLayout(combopanel, BoxLayout.X_AXIS));
+		combopanel.setAlignmentX(CENTER_ALIGNMENT);
+		combopanel.add(Fuerzas);
+		combopanel.add(comForcesBob);
 		
-		JPanel comboBox = new JPanel(new BorderLayout());
-		comboBox.setAlignmentX(CENTER_ALIGNMENT);
-		comboBox.add(Fuerzas);
-		comboBox.add(comForcesBob);
-
-		JPanel okCancel = new JPanel();
-		okCancel.setLayout(new BoxLayout(okCancel, BoxLayout.X_AXIS));
-		okCancel.setAlignmentX(CENTER_ALIGNMENT);
-		
+		//Anyadir zona botones
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -189,15 +191,13 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 
 			}			
 		});
+		buttons.add(cancel);
+		buttons.add(ok);
 		
-		okCancel.add(ok);
-		okCancel.add(cancel);
-		downPanel.add(comboBox, BorderLayout.NORTH);
-		downPanel.add(okCancel, BorderLayout.SOUTH);
-		
-		main.add(downPanel, BorderLayout.SOUTH);
+
+				
 		this.add(main);
-		this.pack();
+
 
 	}
 
