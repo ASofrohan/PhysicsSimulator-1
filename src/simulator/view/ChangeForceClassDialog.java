@@ -169,7 +169,8 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		comboBox.add(Fuerzas);
 		comboBox.add(comForcesBob);
 
-		JPanel okCancel = new JPanel(new BorderLayout());
+		JPanel okCancel = new JPanel();
+		okCancel.setLayout(new BoxLayout(okCancel, BoxLayout.X_AXIS));
 		okCancel.setAlignmentX(CENTER_ALIGNMENT);
 		
 		JButton cancel = new JButton("Cancel");
@@ -195,6 +196,8 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		downPanel.add(okCancel, BorderLayout.SOUTH);
 		
 		main.add(downPanel, BorderLayout.SOUTH);
+		this.add(main);
+		this.pack();
 
 	}
 
