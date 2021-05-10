@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -142,13 +143,35 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	}
 	
 	private void initGUI(){
+		
+		JLabel Fuerzas = new JLabel("Forcelaw:");
+		comForcesBob = new JComboBox<String>();
+		for(int i =0; i< _ctrl.getForceLawsInfo().size(); i++) {
+			comForcesBob.addItem(_ctrl.getForceLawsInfo().get(i).getString("type"));
+			
+		}
+		
 		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1));
 		_eventsTable = new JTable(ParamTable);
 
-		JLabel descripcion  = new JLabel("Select a force law and provide values for the parameters "
-			+ "in the Value column (default values are used for parameters with no value) ");
+		JPanel main = new JPanel(new BorderLayout());
+		main.add(new JLabel("Select a force law and provide values for the parameters "
+				+ "in the Value column (default values are used for parameters with no value) "), BorderLayout.NORTH);
 		
-	
+		JPanel p = new JPanel(new BorderLayout());
+		p.add(new JScrollPane(_eventsTable));
+		main.add(p, BorderLayout.CENTER);
+		
+		JPanel downPanel = new JPanel(new BorderLayout());
+		
+		JPanel comboBox = new JPanel(new BorderLayout());
+		comboBox.setAlignmentX(CENTER_ALIGNMENT);
+		comboBox.add(Fuerzas);
+		comboBox.add(comForcesBob);
+
+		JPanel okCancel = new JPanel(new BorderLayout());
+		okCancel.setAlignmentX(CENTER_ALIGNMENT);
+		
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -166,23 +189,12 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 			}			
 		});
 		
-		JLabel Fuerzas = new JLabel("Forcelaw:");
-		comForcesBob = new JComboBox<String>();
-		for(int i =0; i< _ctrl.getForceLawsInfo().size(); i++) {
-			comForcesBob.addItem(_ctrl.getForceLawsInfo().get(i).getString("type"));
-			
-		}
+		okCancel.add(ok);
+		okCancel.add(cancel);
+		downPanel.add(comboBox, BorderLayout.NORTH);
+		downPanel.add(okCancel, BorderLayout.SOUTH);
 		
-		this.add(Fuerzas);
-		this.add(comForcesBob);
-		this.add(descripcion);
-		this.add(cancel);
-		this.add(ok);
-		this.add(_eventsTable);
-
-
-		
-		
+		main.add(downPanel, BorderLayout.SOUTH);
 
 	}
 
