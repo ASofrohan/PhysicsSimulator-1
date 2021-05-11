@@ -66,9 +66,7 @@ public class PhysicsSimulator {
 	public ForceLaws getForceLaw() {
 		return forceLaw;
 	}
-	public void setForceLaw(ForceLaws forceLaw) {
-		this.forceLaw = forceLaw;
-	}
+	
 	public double getDt() {
 		return dt;
 	}
@@ -91,7 +89,7 @@ public class PhysicsSimulator {
 		bs.clear();
 		currentT = 0;
 		for(SimulatorObserver o: so) {
-			o.onReset(bs, currentT, dt, null);
+			o.onReset(bs, currentT, dt, forceLaw.toString());
 		}
 	}
 	public void setDeltaTime(double dt) {
@@ -101,17 +99,17 @@ public class PhysicsSimulator {
 			o.onDeltaTimeChanged(dt);
 		}
 	}
-	public void setForceLawsLaws(ForceLaws forceLaws) {
+	public void setForceLaw(ForceLaws forceLaws) {
 		 if(forceLaws.equals(null)) throw new IllegalArgumentException("setForceLawsLaws exception");
 		this.forceLaw = forceLaws;
 		for(SimulatorObserver o: so) {
-			o.onForceLawsChanged(null);
+			o.onForceLawsChanged(forceLaw.toString());
 		}
 	}
 	public void addObserver(SimulatorObserver o) {
 		if(!so.contains(o)) {
 			so.add(o);
-			o.onRegister(bs, currentT, dt, null);
+			o.onRegister(bs, currentT, dt, forceLaw.toString());
 		}
 	}
 }

@@ -102,7 +102,7 @@ public class ChangeForceClassDialog extends JDialog {
 				s = _data[rowIndex];
 				break;
 			case 2:
-				//s = ForceData.getString(arr.getString(rowIndex));
+				s = ForceData.getJSONObject("data").getString(arr.getString(rowIndex));
 				break;
 			}
 			return s;
@@ -155,11 +155,20 @@ public class ChangeForceClassDialog extends JDialog {
 			comForcesBob.addItem(_ctrl.getForceLawsInfo().get(i).getString("type"));
 			
 		}
+		
+		
 		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1));
 		_eventsTable = new JTable(ParamTable);
 		JLabel help = new JLabel(
 				"<html><p>Select a force law and provide values for the parametes in the <b>Value column</b> (default values are used for parametes with no value).</p></html>");
 
+		comForcesBob.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(-1!=comForcesBob.getSelectedIndex())
+					ParamTable.setForceData(_ctrl.getForceLawsInfo().get(comForcesBob.getSelectedIndex()));
+			}						
+		});
 		help.setAlignmentX(CENTER_ALIGNMENT);
 		
 		

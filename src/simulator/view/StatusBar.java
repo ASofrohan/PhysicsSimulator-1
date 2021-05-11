@@ -31,7 +31,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 			bodies = 0;
 			 law = " ";
 			_currTime = new JLabel("Time: "+String.valueOf(this.steps));
-			_currLaws = new JLabel("Laws:: "+String.valueOf(this.law));     
+			_currLaws = new JLabel("Laws: "+String.valueOf(this.law));     
 			_numOfBodies = new JLabel("Bodies: "+String.valueOf(this.bodies));
 			initGUI();
 			ctrl.addObserver(this);
@@ -57,7 +57,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 		this.bodies = bodies.size();	
 		_numOfBodies.setText("Bodies: : "+String.valueOf(this.bodies));
 		law = fLawsDesc;	
-		_currTime.setText("Laws: "+String.valueOf(this.law));
+		_currLaws.setText("Laws: "+String.valueOf(this.law));
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 		this.bodies = bodies.size();	
 		_numOfBodies.setText("Bodies: : "+String.valueOf(this.bodies));
 		law = fLawsDesc;	
-		_currTime.setText("Laws: "+String.valueOf(this.law));
+		_currLaws.setText("Laws: "+String.valueOf(this.law));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class StatusBar extends JPanel implements SimulatorObserver {
 	@Override
 	public void onForceLawsChanged(String fLawsDesc) {
 		law = fLawsDesc;	
-		_currTime.setText("Laws: "+String.valueOf(this.law));
+		_currLaws.setText("Laws: "+String.valueOf(this.law));
 
 	}
 
