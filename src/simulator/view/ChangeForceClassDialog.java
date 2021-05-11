@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +23,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +35,7 @@ import simulator.model.Body;
 import simulator.model.SimulatorObserver;
 
 
-public class ChangeForceClassDialog extends JDialog  implements SimulatorObserver {
+public class ChangeForceClassDialog extends JDialog {
 	private JComboBox<String> comForcesBob;
 	private Controller _ctrl;
 	private JsonParamTable ParamTable;
@@ -54,7 +59,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		}
 
 		public void update() {
-			fireTableDataChanged();
+			fireTableStructureChanged();
 		}
 		
 		@Override
@@ -97,7 +102,7 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 				s = _data[rowIndex];
 				break;
 			case 2:
-				s = ForceData.getString(arr.getString(rowIndex));
+				//s = ForceData.getString(arr.getString(rowIndex));
 				break;
 			}
 			return s;
@@ -127,7 +132,6 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 	
 	public  ChangeForceClassDialog(Controller controller) {
 		_ctrl = controller;
-		_ctrl.addObserver(this);
 		this.initGUI();
 	}
 	
@@ -153,27 +157,42 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		}
 		ParamTable = new JsonParamTable(_ctrl.getForceLawsInfo().get(1));
 		_eventsTable = new JTable(ParamTable);
-		JLabel description = new JLabel("Select a force law and provide values for the parameters "
-				+ "in the Value column (default values are used for parameters with no value) ");
+		JLabel help = new JLabel(
+				"<html><p>Select a force law and provide values for the parametes in the <b>Value column</b> (default values are used for parametes with no value).</p></html>");
+
+		help.setAlignmentX(CENTER_ALIGNMENT);
+		
 		
 		//Anyadir descripcion
 		JPanel main = new JPanel();
 		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-		main.add(description);
+		setContentPane(main);
+		main.add(help);
+		
+		main.add(Box.createRigidArea(new Dimension(0, 20)));
+
 		
 		//Anyadir tabla
-		JPanel p = new JPanel();
-		_eventsTable.setPreferredSize(new Dimension(100, 200));
-		_eventsTable.setMaximumSize(new Dimension(100, 200));
-		_eventsTable.setMinimumSize(new Dimension(100, 200));
-		p.add(new JScrollPane(_eventsTable));
+		_eventsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		_eventsTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+		TableColumnModel colModel = _eventsTable.getColumnModel();
+        colModel.getColumn(1).setPreferredWidth(200);
+		colModel.getColumn(2).setPreferredWidth(400);
 		
+		_eventsTable.setPreferredSize(new Dimension(500, 200));
+		_eventsTable.setMaximumSize(new Dimension(500, 200));
+		_eventsTable.setMinimumSize(new Dimension(500, 200));
+		JScrollPane x = new JScrollPane(_eventsTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-		p.setPreferredSize(new Dimension(100, 200));
-		p.setMaximumSize(new Dimension(100, 200));
-		p.setMinimumSize(new Dimension(100, 200));
+		x.setPreferredSize(new Dimension(500, 200));
+		x.setMaximumSize(new Dimension(500, 200));
+		x.setMinimumSize(new Dimension(500, 200));
 
-		main.add(p);
+		main.add(x);
+		
+		main.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		//Anyadir zona combobox
 		JPanel combopanel = new JPanel();
@@ -181,7 +200,13 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		combopanel.setAlignmentX(CENTER_ALIGNMENT);
 		combopanel.add(Fuerzas);
 		combopanel.add(comForcesBob);
+		combopanel.setPreferredSize(new Dimension(50, 30));
+		combopanel.setMinimumSize(new Dimension(50, 30));
+		combopanel.setMaximumSize(new Dimension(500, 30));
+		
 		main.add(combopanel);
+		
+		main.add(Box.createRigidArea(new Dimension(0, 20)));
 		
 		//Anyadir zona botones
 		JPanel buttons = new JPanel();
@@ -206,15 +231,11 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 		buttons.add(ok);
 		main.add(buttons);
 		
-		//main.setPreferredSize(new Dimension(1000, 1000));
+		main.add(Box.createRigidArea(new Dimension(0, 20)));
 		
-		
-
-		setContentPane(main);
-		//this.add(main);
-		this.pack();
-
-
+		pack();
+		setResizable(false);
+		setVisible(false);
 
 	}
 
@@ -224,39 +245,4 @@ public class ChangeForceClassDialog extends JDialog  implements SimulatorObserve
 
 	}
 	
-
-	
-	
-	
-	@Override
-	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onBodyAdded(List<Body> bodies, Body b) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onAdvance(List<Body> bodies, double time) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onDeltaTimeChanged(double dt) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onForceLawsChanged(String fLawsDesc) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
