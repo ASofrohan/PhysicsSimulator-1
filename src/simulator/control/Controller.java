@@ -102,6 +102,7 @@ public class Controller {
 	}
 	
 	public void setForceLaws(JSONObject info) {
+		
 		sim.setForceLaw(factoryF.createInstance(info));
 	}
 }

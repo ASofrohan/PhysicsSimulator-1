@@ -102,6 +102,8 @@ public class PhysicsSimulator {
 	public void setForceLaw(ForceLaws forceLaws) {
 		 if(forceLaws.equals(null)) throw new IllegalArgumentException("setForceLawsLaws exception");
 		this.forceLaw = forceLaws;
+		
+		
 		for(SimulatorObserver o: so) {
 			o.onForceLawsChanged(forceLaw.toString());
 		}

@@ -111,6 +111,7 @@ public class ChangeForceClassDialog extends JDialog {
 		@Override
 		public void setValueAt(Object o, int rowIndex, int columnIndex) {
 			_data[rowIndex] = o.toString();
+
 		}
 		
 		public JSONObject getData() {
@@ -121,10 +122,14 @@ public class ChangeForceClassDialog extends JDialog {
 			JSONObject nuevoParams = new JSONObject();
 			JSONArray arr = ForceData.getJSONObject("data").names();
 			for(int i = 0; i< ForceData.getJSONObject("data").length(); i++) {
+				
 				nuevoParams.put(arr.getString(i), _data[i]);
+				
 			}
 			jo1.put("data", nuevoParams);
 			jo.put("data", jo1);
+			
+
 			return jo;			
 		}
 		
