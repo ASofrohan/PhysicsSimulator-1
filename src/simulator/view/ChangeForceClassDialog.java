@@ -53,7 +53,7 @@ public class ChangeForceClassDialog extends JDialog {
 
 		public JsonParamTable(JSONObject jo) {
 			ForceData = jo.getJSONObject("data");
-			_data = new String [ForceData.getJSONObject("data").length()];
+			_data = new String [ForceData.length()];
 			Force = jo;
 			update();
 		}
@@ -69,7 +69,7 @@ public class ChangeForceClassDialog extends JDialog {
 
 		public void setForceData(JSONObject jo) {
 			ForceData = jo.getJSONObject("data");
-			_data = new String [ForceData.getJSONObject("data").length()];
+			_data = new String [ForceData.length()];
 			Force = jo;
 			update();
 		}
@@ -88,12 +88,12 @@ public class ChangeForceClassDialog extends JDialog {
 			return _header.length;
 		}
 		public int getRowCount() {
-			return ForceData == null ? 0 : ForceData.getJSONObject("data").length();
+			return ForceData == null ? 0 : ForceData.length();
 		}
 		
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			Object s = null;
-			JSONArray arr = ForceData.getJSONObject("data").names();
+			JSONArray arr = ForceData.names();
 			switch (columnIndex) {
 			case 0:
 				s =  arr.get(rowIndex);
@@ -102,7 +102,7 @@ public class ChangeForceClassDialog extends JDialog {
 				s = _data[rowIndex];
 				break;
 			case 2:
-				s = ForceData.getJSONObject("data").getString(arr.getString(rowIndex));
+				s = ForceData.getString(arr.getString(rowIndex));
 				break;
 			}
 			return s;
@@ -117,21 +117,21 @@ public class ChangeForceClassDialog extends JDialog {
 		public JSONObject getData() {
 			JSONObject jo = new JSONObject();
 			jo = Force;
-			JSONObject jo1 = new JSONObject();
-			jo1 = ForceData;
-			JSONObject nuevoParams = new JSONObject();
-			JSONArray arr = ForceData.getJSONObject("data").names();
-			for(int i = 0; i< ForceData.getJSONObject("data").length(); i++) {
+			
+			JSONArray arr = ForceData.names();
+			for(int i = 0; i< ForceData.length(); i++) {
 				
-				nuevoParams.put(arr.getString(i), _data[i]);
+				(arr.getString(i), _data[i]
 				
 			}
-			jo1.put("data", nuevoParams);
-			jo.put("data", jo1);
+			
+			jo.put("data", nuevoParams);
 			
 
 			return jo;			
 		}
+		
+		//String builder 
 		
 	}
 	

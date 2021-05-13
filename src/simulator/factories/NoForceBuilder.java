@@ -18,11 +18,7 @@ public class NoForceBuilder extends Builder<ForceLaws> {
 
 	@Override
 	protected JSONObject getBuilderData() {
-		JSONObject jo = new JSONObject();
-		jo.put("type", this._type);
-		JSONObject jo1 = new JSONObject();
-		jo.put("data", jo1);
-		jo.put("desc", this._desc);
+		JSONObject jo = new JSONObject();		
 		return jo;
 	}
 
