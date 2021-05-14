@@ -18,7 +18,6 @@ public abstract class Builder<T> {
 	public T createInstance(JSONObject info) {
 
 		T b = null;
-		System.out.println("createInstance"+info);
 
 
 		if (_type != null && _type.equals(info.getString("type"))) {

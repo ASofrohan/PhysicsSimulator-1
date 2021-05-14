@@ -18,7 +18,6 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 	public T createInstance(JSONObject info) {
 		if (info != null) {
 			for (Builder<T> bb : _builders) {
-				System.out.println("Create instance "+info);
 
 				T o = bb.createInstance(info);
 				if (o != null)

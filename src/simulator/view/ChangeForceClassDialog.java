@@ -119,15 +119,26 @@ public class ChangeForceClassDialog extends JDialog {
 			jo = Force;
 			
 			JSONArray arr = ForceData.names();
+			
+			StringBuilder s = new StringBuilder();
+			s.append('{');
 			for(int i = 0; i< ForceData.length(); i++) {
-				
-				(arr.getString(i), _data[i]
+				s.append('"');
+				s.append(arr.getString(i));
+
+				s.append('"');
+				s.append(':');
+				s.append(_data[i]);
+				s.append(',');
 				
 			}
-			
-			jo.put("data", nuevoParams);
+			if (s.length() > 1)
+				s.deleteCharAt(s.length() - 1);
+			s.append('}');
 			
 
+			jo.put("data", new JSONObject(s.toString()));
+			
 			return jo;			
 		}
 		

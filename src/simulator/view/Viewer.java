@@ -112,6 +112,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		
 			}
 		});
+
 	}
 	
 	@Override
@@ -179,6 +180,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			 gr.drawString(s0, _centerX - this.getWidth()/2, _centerY - this.getHeight()/2+20);
 			 gr.drawString(s1, _centerX - this.getWidth()/2, _centerY - this.getHeight()/2+40);
 		 }
+			autoScale();
+
 	}
 	
 	// other private/protected methods
