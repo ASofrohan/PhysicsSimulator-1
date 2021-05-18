@@ -140,7 +140,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			 x =  b.getPosition().getX();
 			 y = b.getPosition().getY();
 			 gr.setColor(Color.blue);
-			 gr.fillOval(_centerX + (int) (x/_scale), _centerY + (int) (y/_scale), 5, 5);
+			 gr.fillOval(_centerX + (int) (x/_scale), _centerY + (int) (y/_scale), 11, 11);
 			 gr.setColor(Color.black);
 			 gr.drawString(b.getId(),_centerX +1 + (int) (x/_scale),_centerY - 1 + (int) (y/_scale));
 			 if(_showVectors) {
@@ -149,8 +149,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
 						 gr,
 						 _centerX + (int) (x/_scale),  //x1
 						 _centerY + (int) (y/_scale),   //y1
-						 _centerX + (int) (x/_scale) + (int)(30*b.getForce().direction().getX()), //x2
-						 _centerY + (int) (y/_scale) + (int)(30*b.getForce().direction().getY()), //y2
+						 _centerX + (int) (x/_scale) + (int)(20*b.getForce().direction().getX()), //x2
+						 _centerY + (int) (y/_scale) + (int)(20*b.getForce().direction().getY()), //y2
 						 4,
 						 4,
 						 Color.red,
@@ -162,8 +162,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
 				 drawLineWithArrow(gr, 
 						 _centerX + (int) (x/_scale),  //x1
 						 _centerY + (int) (y/_scale),   //y1
-						 _centerX + (int) (x/_scale) + (int)(30*b.getVelocity().direction().getX()), //x2
-						 _centerY + (int) (y/_scale) + (int)(30*b.getVelocity().direction().getY()), //y2
+						 _centerX + (int) (x/_scale) + (int)(20*b.getVelocity().direction().getX()), //x2
+						 _centerY + (int) (y/_scale) + (int)(20*b.getVelocity().direction().getY()), //y2
 						 4,
 						 4, 
 						 Color.green, 
