@@ -1,5 +1,3 @@
-//Asier Goñi Ancho
-//Fernando German Herrera Herrero
 
 package simulator.launcher;
 
@@ -38,7 +36,8 @@ import simulator.model.Body;
 import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;
 import simulator.view.MainWindow;
-
+ 
+//-m gui -i resources/examples/ex1.2body.json -o resources/output/out.1.json -s 10000 -dt 10000 -fl nlug
 public class Main {
 
 	// default values for some parameters
